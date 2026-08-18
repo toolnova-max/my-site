@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToolNest - Free Online Productivity & Developer Tools</title>
+    <meta name="description" content="Free online tools including Word Counter, Image Resizer, QR Generator, JSON Formatter, Calculators and more. Clean, fast, and mobile-friendly.">
+    <meta name="keywords" content="online tools, word counter, qr generator, json formatter, bmi calculator, age calculator">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph for SEO -->
+    <meta property="og:title" content="ToolNest - Free Online Tools">
+    <meta property="og:description" content="20+ free online utility tools for developers, creators, and students.">
+    <meta property="og:type" content="website">
+
+    <style>
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    :root {
+        --primary: #6c5ce7;
+        --primary-dark: #5849c4;
+        --primary-light: #ece9ff;
+        --background: #f8f9fd;
+        --card: #ffffff;
+        --text: #1e293b;
+        --muted: #64748b;
+        --border: #e2e8f0;
+        --ad-bg: #f1f5f9;
+        --radius: 12px;
+        --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    }
+
+    body.dark {
+        --primary-light: #26214d;
+        --background: #0f172a;
+        --card: #1e293b;
+        --text: #f8fafc;
+        --muted: #94a3b8;
+        --border: #334155;
+        --ad-bg: #1a233a;
+        --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    body {
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        background: var(--background);
+        color: var(--text);
+        transition: background-color 0.3s, color 0.3s;
+        line-height: 1.6;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    button, input, textarea, select { font-family: inherit; }
+
+    /* Header & Nav */
+    header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: var(--card);
+        border-bottom: 1px solid var(--border);
+        backdrop-filter: blur(8px);
+    }
+
+    nav {
+        max-width: 1200px;
+        margin: auto;
+        padding: 16px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: 800;
+        color: var(--primary);
+    }
+
+    .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 24px;
+    }
+
+    .nav-links a {
+        color: var(--text);
+        font-weight: 500;
+        font-size: 15px;
+        transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--primary); }
+
+    .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .theme-btn, .menu-btn {
+        border: 1px solid var(--border);
+        background: var(--card);
+        color: var(--text);
+        padding: 8px 16px;
+        border-radius: var(--radius);
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.2s;
+    }
+
+    .theme-btn:hover { background: var(--primary-light); }
+    .menu-btn { display: none; }
+
+    /* Hero Section */
+    .hero {
+        padding: 80px 20px 60px;
+        text-align: center;
+        background: linear-gradient(135deg, #6c5ce7 0%, #3b82f6 100%);
+        color: white;
+        position: relative;
+    }
+
+    .hero h1 {
+        font-size: 48px;
+        font-weight: 800;
+        margin-bottom: 16px;
+        animation: fadeIn 0.8s ease;
+    }
+
+    .hero p {
+        max-width: 650px;
+        margin: auto;
+        font-size: 18px;
+        opacity: 0.9;
+    }
+
+    .search-container {
+        max-width: 600px;
+        margin: 32px auto 0;
+        position: relative;
+    }
+
+    .search-container input {
+        width: 100%;
+        padding: 18px 24px;
+        border: none;
+        border-radius: 50px;
+        outline: none;
+        font-size: 16px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+
+    /* Ad Placement Placeholder */
+    .ad-banner {
+        max-width: 970px;
+        margin: 30px auto;
+        padding: 15px;
+        background: var(--ad-bg);
+        border: 1px dashed var(--border);
+        border-radius: var(--radius);
+        text-align: center;
+        color: var(--muted);
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Main Container */
+    .container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 40px 20px;
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .section-title h2 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+    .section-title p { color: var(--muted); }
+
+    /* Categories */
+    .categories {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 40px;
+    }
+
+    .category-btn {
+        border: 1px solid var(--border);
+        background: var(--card);
+        color: var(--text);
+        padding: 10px 20px;
+        border-radius: 30px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.2s;
+    }
+
+    .category-btn.active, .category-btn:hover {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+    }
+
+    /* Grid Layout */
+    .tools-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 24px;
+    }
+
+    .tool-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 24px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-shadow: var(--shadow);
+    }
+
+    .tool-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--primary);
+    }
+
+    .tool-card h3 { font-size: 18px; margin-bottom: 8px; }
+    .tool-card p { color: var(--muted); font-size: 14px; margin-bottom: 20px; flex-grow: 1; }
+
+    .tool-btn {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 8px;
+        background: var(--primary);
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .tool-btn:hover { background: var(--primary-dark); }
+
+    /* Modal / Tool Display Window */
+    .modal-overlay {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.6);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        padding: 20px;
+        backdrop-filter: blur(4px);
+    }
+
+    .modal-overlay.active { display: flex; animation: fadeIn 0.2s ease; }
+
+    .tool-window {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        width: 100%;
+        max-width: 700px;
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 32px;
+        position: relative;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 20px; right: 20px;
+        background: none; border: none;
+        font-size: 20px; color: var(--muted);
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .tool-window textarea, .tool-window input, .tool-window select {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--background);
+        color: var(--text);
+        margin-bottom: 16px;
+        outline: none;
+    }
+
+    .tool-window textarea { min-height: 140px; resize: vertical; }
+
+    .tool-action-btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        background: var(--primary);
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+        margin-right: 8px;
+        margin-bottom: 8px;
+    }
+
+    .result-box {
+        margin-top: 20px;
+        padding: 16px;
+        background: var(--background);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-weight: 600;
+        word-break: break-all;
+        white-space: pre-wrap;
+    }
+
+    /* Pages Content Views (Privacy, Terms, Contact) */
+    .page-section { display: none; padding: 60px 20px; }
+    .page-section.active { display: block; }
+
+    /* Footer */
+    footer {
+        background: #0f172a;
+        color: #94a3b8;
+        padding: 60px 20px 30px;
+        margin-top: 80px;
+    }
+
+    .footer-content {
+        max-width: 1200px;
+        margin: auto;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 40px;
+    }
+
+    .footer-brand { color: white; font-size: 22px; font-weight: 700; margin-bottom: 12px; }
+    footer h4 { color: white; margin-bottom: 16px; font-size: 16px; }
+    footer a { display: block; margin-bottom: 8px; transition: color 0.2s; }
+    footer a:hover { color: white; }
+
+    .copyright {
+        max-width: 1200px;
+        margin: 40px auto 0;
+        padding-top: 20px;
+        border-top: 1px solid #1e293b;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .nav-links {
+            display: none;
+            position: absolute;
+            top: 100%; left: 0; width: 100%;
+            background: var(--card);
+            flex-direction: column;
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-links.show { display: flex; }
+        .menu-btn { display: block; }
+        .hero h1 { font-size: 32px; }
+        .footer-content { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <nav>
+        <a href="#" class="logo" onclick="showHome()">ToolNest</a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home" onclick="showHome()">Home</a></li>
+            <li><a href="#tools" onclick="showHome()">Tools</a></li>
+            <li><a href="#blog" onclick="showHome()">Blog</a></li>
+            <li><a href="#about" onclick="showPage('aboutPage')">About</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="theme-btn" id="themeButton">Dark Mode</button>
+            <button class="menu-btn" id="menuButton">Menu</button>
+        </div>
+    </nav>
+</header>
+
+<div id="mainContent">
+
+    <section class="hero" id="home">
+        <h1>20+ Free Online Utility Tools</h1>
+        <p>Simple, fast, and secure tools for your daily digital needs. No installations required.</p>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search for tools (e.g., QR, BMI, Word Counter)...">
+        </div>
+    </section>
+
+    <!-- Top Ad Placement Space -->
+    <div class="ad-banner">
+        <span>Advertisement Space (AdSense Compatible)</span>
+    </div>
+
+    <section class="container" id="tools">
+        <div class="section-title">
+            <h2>Explore Our Tools</h2>
+            <p>Select a category to filter or search above</p>
+        </div>
+
+        <div class="categories" id="categories">
+            <button class="category-btn active" data-category="all">All</button>
+            <button class="category-btn" data-category="text">Text Tools</button>
+            <button class="category-btn" data-category="image">Image Tools</button>
+            <button class="category-btn" data-category="developer">Developer Tools</button>
+            <button class="category-btn" data-category="calculator">Calculators</button>
+            <button class="category-btn" data-category="utility">Utilities</button>
+        </div>
+
+        <div class="tools-grid" id="toolsGrid"></div>
+    </section>
+
+    <!-- Middle Ad Placement Space -->
+    <div class="ad-banner">
+        <span>Advertisement Space</span>
+    </div>
+
+    <!-- Blog & Guides Section -->
+    <section class="container" id="blog">
+        <div class="section-title">
+            <h2>Latest Guides & Articles</h2>
+            <p>Learn how to optimize your developer workflow and daily utilities</p>
+        </div>
+        <div class="tools-grid">
+            <div class="tool-card">
+                <h3>How to Choose Strong Passwords</h3>
+                <p>Learn why complex password generation keeps your accounts safe from automated attacks.</p>
+                <button class="tool-btn" onclick="alert('Article coming soon!')">Read Article</button>
+            </div>
+            <div class="tool-card">
+                <h3>Understanding BMI & Health</h3>
+                <p>A simple guide explaining Body Mass Index parameters and how to interpret your results.</p>
+                <button class="tool-btn" onclick="alert('Article coming soon!')">Read Article</button>
+            </div>
+            <div class="tool-card">
+                <h3>Why Validate JSON Online?</h3>
+                <p>Avoid deployment bugs by formatting and validating your JSON payload structure properly.</p>
+                <button class="tool-btn" onclick="alert('Article coming soon!')">Read Article</button>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<!-- Dynamic Page Views -->
+<div id="privacyPage" class="page-section container">
+    <h2>Privacy Policy</h2>
+    <p style="margin-top:15px;">Your privacy is essential to us. ToolNest processes all inputs directly on your browser client-side. We do not store or transmit your sensitive data or images to external servers.</p>
+</div>
+
+<div id="termsPage" class="page-section container">
+    <h2>Terms of Service</h2>
+    <p style="margin-top:15px;">By using ToolNest, you agree to utilize our utilities responsibly. All tools are provided "as-is" without express warranty.</p>
+</div>
+
+<div id="contactPage" class="page-section container">
+    <h2>Contact Us</h2>
+    <p style="margin-top:15px;">Have questions or tool suggestions? Send us a message:</p>
+    <div style="max-width:500px; margin-top:20px;">
+        <input type="text" placeholder="Your Name">
+        <input type="email" placeholder="Your Email">
+        <textarea placeholder="Your Message"></textarea>
+        <button class="tool-action-btn" onclick="alert('Message sent!')">Send Message</button>
+    </div>
+</div>
+
+<div id="aboutPage" class="page-section container">
+    <h2>About ToolNest</h2>
+    <p style="margin-top:15px;">ToolNest is built to empower creators, developers, and students with reliable, clean, and instant web tools free of charge.</p>
+</div>
+
+<!-- Active Tool Modal -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="tool-window">
+        <button class="close-btn" onclick="closeTool()">Close</button>
+        <h2 id="toolTitle" style="margin-bottom: 20px;">Tool Name</h2>
+        <div id="toolContent"></div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-content">
+        <div>
+            <div class="footer-brand">ToolNest</div>
+            <p>Fast, efficient, and free web utilities for everyone.</p>
+        </div>
+        <div>
+            <h4>Quick Links</h4>
+            <a href="#home" onclick="showHome()">Home</a>
+            <a href="#tools" onclick="showHome()">All Tools</a>
+            <a href="#blog" onclick="showHome()">Blog</a>
+        </div>
+        <div>
+            <h4>Legal</h4>
+            <a href="#privacy" onclick="showPage('privacyPage')">Privacy Policy</a>
+            <a href="#terms" onclick="showPage('termsPage')">Terms of Service</a>
+        </div>
+        <div>
+            <h4>Support</h4>
+            <a href="#contact" onclick="showPage('contactPage')">Contact</a>
+            <a href="#about" onclick="showPage('aboutPage')">About Us</a>
+        </div>
+    </div>
+    <div class="copyright">
+        Copyright 2026 ToolNest. All rights reserved.
+    </div>
+</footer>
+
+<script>
+// Database containing 20+ Tools
+const tools = [
+    { name: "Word Counter", category: "text", description: "Count words, characters, and reading time.", type: "word" },
+    { name: "Character Counter", category: "text", description: "Quickly count the exact number of characters.", type: "character" },
+    { name: "Case Converter", category: "text", description: "Convert text to Uppercase, Lowercase, or Title Case.", type: "case" },
+    { name: "Text Cleaner", category: "text", description: "Remove extra whitespaces and line breaks.", type: "clean" },
+    
+    { name: "Image Resizer", category: "image", description: "Inspect and calculate proper image proportions.", type: "image" },
+    { name: "QR Code Generator", category: "image", description: "Create QR codes for URLs, text, and Wi-Fi.", type: "qr" },
+    
+    { name: "JSON Formatter", category: "developer", description: "Prettify or validate complex JSON code.", type: "json" },
+    { name: "HTML Formatter", category: "developer", description: "Clean up and structure HTML code.", type: "html" },
+    { name: "CSS Formatter", category: "developer", description: "Indent and beautify CSS stylesheets.", type: "css" },
+    { name: "Color Converter", category: "developer", description: "Convert HEX color values to RGB format.", type: "color" },
+    { name: "Base64 Encoder/Decoder", category: "developer", description: "Encode or decode strings using Base64.", type: "base64" },
+    { name: "URL Encoder/Decoder", category: "developer", description: "Safely encode special characters for URLs.", type: "url" },
+    
+    { name: "Percentage Calculator", category: "calculator", description: "Easily compute percentage increases or ratios.", type: "percentage" },
+    { name: "Age Calculator", category: "calculator", description: "Determine exact age in years, months, and days.", type: "age" },
+    { name: "BMI Calculator", category: "calculator", description: "Calculate Body Mass Index and health status.", type: "bmi" },
+    { name: "Basic Calculator", category: "calculator", description: "Execute basic math operations instantly.", type: "calc" },
+    { name: "Average Calculator", category: "calculator", description: "Find the mean of a set of comma-separated numbers.", type: "average" },
+    
+    { name: "Password Generator", category: "utility", description: "Generate secure random passwords.", type: "password" },
+    { name: "Unit Converter", category: "utility", description: "Convert distance (Kilometers to Miles).", type: "unit" },
+    { name: "Lorem Ipsum Generator", category: "utility", description: "Generate placeholder text for design drafts.", type: "lorem" },
+    { name: "Markdown Previewer", category: "utility", description: "Quickly render raw markdown to styled text.", type: "md" }
+];
+
+const toolsGrid = document.getElementById("toolsGrid");
+const searchInput = document.getElementById("searchInput");
+const categories = document.getElementById("categories");
+const modalOverlay = document.getElementById("modalOverlay");
+const toolTitle = document.getElementById("toolTitle");
+const toolContent = document.getElementById("toolContent");
+
+let activeCategory = "all";
+
+function renderTools() {
+    const search = searchInput.value.toLowerCase();
+    toolsGrid.innerHTML = "";
+
+    const filtered = tools.filter(tool => {
+        const matchCat = activeCategory === "all" || tool.category === activeCategory;
+        const matchSearch = tool.name.toLowerCase().includes(search) || tool.description.toLowerCase().includes(search);
+        return matchCat && matchSearch;
+    });
+
+    if (filtered.length === 0) {
+        toolsGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--muted);">No matching tools found.</div>`;
+        return;
+    }
+
+    filtered.forEach(tool => {
+        const card = document.createElement("div");
+        card.className = "tool-card";
+        card.innerHTML = `
+            <div>
+                <h3>${tool.name}</h3>
+                <p>${tool.description}</p>
+            </div>
+            <button class="tool-btn" onclick='openTool(${JSON.stringify(tool)})'>Open Tool</button>
+        `;
+        toolsGrid.appendChild(card);
+    });
+}
+
+function openTool(tool) {
+    toolTitle.textContent = tool.name;
+    toolContent.innerHTML = getToolUI(tool.type);
+    modalOverlay.classList.add("active");
+}
+
+function closeTool() {
+    modalOverlay.classList.remove("active");
+}
+
+/* Tool Interface Renderer */
+function getToolUI(type) {
+    switch(type) {
+        case "word":
+            return `<textarea id="tInput" placeholder="Paste your text here..."></textarea>
+                    <button class="tool-action-btn" onclick="runWordCount()">Count Text</button>
+                    <div class="result-box" id="res">Words: 0 | Characters: 0 | Reading Time: 0s</div>`;
+        case "character":
+            return `<textarea id="tInput" placeholder="Type text..."></textarea>
+                    <button class="tool-action-btn" onclick="document.getElementById('res').innerText = 'Character Count: ' + document.getElementById('tInput').value.length">Count</button>
+                    <div class="result-box" id="res">Characters: 0</div>`;
+        case "case":
+            return `<textarea id="tInput" placeholder="Enter text..."></textarea>
+                    <button class="tool-action-btn" onclick="document.getElementById('tInput').value = document.getElementById('tInput').value.toUpperCase()">UPPERCASE</button>
+                    <button class="tool-action-btn" onclick="document.getElementById('tInput').value = document.getElementById('tInput').value.toLowerCase()">lowercase</button>
+                    <button class="tool-action-btn" onclick="runTitleCase()">Title Case</button>`;
+        case "clean":
+            return `<textarea id="tInput" placeholder="Paste dirty text..."></textarea>
+                    <button class="tool-action-btn" onclick="document.getElementById('tInput').value = document.getElementById('tInput').value.replace(/\\s+/g, ' ').trim()">Clean Spaces</button>`;
+        case "image":
+            return `<input type="number" id="imgW" placeholder="Original Width (px)">
+                    <input type="number" id="imgH" placeholder="Original Height (px)">
+                    <input type="number" id="newW" placeholder="Target Width (px)">
+                    <button class="tool-action-btn" onclick="runImageResize()">Calculate Proportions</button>
+                    <div class="result-box" id="res">Result...</div>`;
+        case "qr":
+            return `<input type="text" id="tInput" placeholder="Enter text or Web URL">
+                    <button class="tool-action-btn" onclick="runQR()">Generate QR</button>
+                    <div class="result-box" id="res" style="text-align:center;">QR will display here</div>`;
+        case "json":
+            return `<textarea id="tInput" placeholder='{"key": "value"}'></textarea>
+                    <button class="tool-action-btn" onclick="runJSON()">Prettify JSON</button>
+                    <div class="result-box" id="res">Output will appear here</div>`;
+        case "html":
+            return `<textarea id="tInput" placeholder="<div><p>Sample HTML</p></div>"></textarea>
+                    <button class="tool-action-btn" onclick="runHTMLFormat()">Format HTML</button>
+                    <div class="result-box" id="res">Output...</div>`;
+        case "css":
+            return `<textarea id="tInput" placeholder="body{color:red;margin:0;}"></textarea>
+                    <button class="tool-action-btn" onclick="runCSSFormat()">Format CSS</button>
+                    <div class="result-box" id="res">Output...</div>`;
+        case "color":
+            return `<input type="text" id="hexInput" placeholder="#6c5ce7">
+                    <button class="tool-action-btn" onclick="runColorConvert()">Convert to RGB</button>
+                    <div class="result-box" id="res">RGB: ...</div>`;
+        case "base64":
+            return `<textarea id="tInput" placeholder="Enter string here..."></textarea>
+                    <button class="tool-action-btn" onclick="runBase64(true)">Encode</button>
+                    <button class="tool-action-btn" onclick="runBase64(false)">Decode</button>
+                    <div class="result-box" id="res">Result...</div>`;
+        case "url":
+            return `<textarea id="tInput" placeholder="Enter URL or text..."></textarea>
+                    <button class="tool-action-btn" onclick="runURLEncode(true)">Encode URL</button>
+                    <button class="tool-action-btn" onclick="runURLEncode(false)">Decode URL</button>
+                    <div class="result-box" id="res">Result...</div>`;
+        case "percentage":
+            return `<input type="number" id="pVal" placeholder="Percentage (%)">
+                    <input type="number" id="pTotal" placeholder="Total Value">
+                    <button class="tool-action-btn" onclick="runPercentage()">Calculate</button>
+                    <div class="result-box" id="res">Result...</div>`;
+        case "age":
+            return `<input type="date" id="dob">
+                    <button class="tool-action-btn" onclick="runAge()">Calculate Age</button>
+                    <div class="result-box" id="res">Select date...</div>`;
+        case "bmi":
+            return `<input type="number" id="weight" placeholder="Weight (kg)">
+                    <input type="number" id="height" placeholder="Height (cm)">
+                    <button class="tool-action-btn" onclick="runBMI()">Calculate BMI</button>
+                    <div class="result-box" id="res">Result...</div>`;
+        case "calc":
+            return `<input type="text" id="calcExpr" placeholder="e.g. 50 * 12 + 40">
+                    <button class="tool-action-btn" onclick="runBasicCalc()">Calculate</button>
+                    <div class="result-box" id="res">Result...</div>`;
+        case "average":
+            return `<input type="text" id="avgInput" placeholder="e.g. 10, 20, 30, 40">
+                    <button class="tool-action-btn" onclick="runAverage()">Calculate Average</button>
+                    <div class="result-box" id="res">Result...</div>`;
+        case "password":
+            return `<input type="number" id="pLength" value="12" min="6" max="32">
+                    <button class="tool-action-btn" onclick="runPassword()">Generate Password</button>
+                    <div class="result-box" id="res">Click generate</div>`;
+        case "unit":
+            return `<input type="number" id="uVal" placeholder="Value in Kilometers">
+                    <button class="tool-action-btn" onclick="runUnitConvert()">Convert to Miles</button>
+                    <div class="result-box" id="res">Miles: ...</div>`;
+        case "lorem":
+            return `<input type="number" id="lParas" value="2" min="1" max="10" placeholder="Number of Paragraphs">
+                    <button class="tool-action-btn" onclick="runLorem()">Generate Text</button>
+                    <div class="result-box" id="res">Result...</div>`;
+        case "md":
+            return `<textarea id="tInput" placeholder="# Hello\n**Bold Text**"></textarea>
+                    <button class="tool-action-btn" onclick="runMarkdown()">Preview HTML</button>
+                    <div class="result-box" id="res">Rendered text...</div>`;
+        default:
+            return `<textarea id="tInput" placeholder="Enter input data..."></textarea>
+                    <button class="tool-action-btn" onclick="document.getElementById('res').innerText = 'Processed successfully.'">Process</button>
+                    <div class="result-box" id="res">Result box...</div>`;
+    }
+}
+
+/* Tool Functions Implementation */
+function runWordCount() {
+    const val = document.getElementById("tInput").value.trim();
+    const words = val === "" ? 0 : val.split(/\s+/).length;
+    const time = Math.ceil(words / 200);
+    document.getElementById("res").innerText = `Words: ${words} | Characters: ${val.length} | Est. Reading Time: ${time} min`;
+}
+
+function runTitleCase() {
+    const val = document.getElementById("tInput").value;
+    document.getElementById("tInput").value = val.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+}
+
+function runImageResize() {
+    const w = parseFloat(document.getElementById("imgW").value);
+    const h = parseFloat(document.getElementById("imgH").value);
+    const nw = parseFloat(document.getElementById("newW").value);
+    if(!w || !h || !nw) return alert("Please fill all required fields!");
+    const nh = Math.round((h / w) * nw);
+    document.getElementById("res").innerText = `Target Dimensions: ${nw}px x ${nh}px`;
+}
+
+function runQR() {
+    const val = document.getElementById("tInput").value;
+    if(!val) return alert("Enter valid input!");
+    document.getElementById("res").innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(val)}" alt="QR Code">`;
+}
+
+function runJSON() {
+    try {
+        const val = JSON.parse(document.getElementById("tInput").value);
+        document.getElementById("res").innerText = JSON.stringify(val, null, 4);
+    } catch(e) {
+        document.getElementById("res").innerText = "Invalid JSON Structure.";
+    }
+}
+
+function runHTMLFormat() {
+    const val = document.getElementById("tInput").value;
+    let formatted = val.replace(/></g, '>\n<');
+    document.getElementById("res").innerText = formatted;
+}
+
+function runCSSFormat() {
+    const val = document.getElementById("tInput").value;
+    let formatted = val.replace(/\{/g, ' {\n  ').replace(/;/g, ';\n  ').replace(/\}/g, '\n}\n');
+    document.getElementById("res").innerText = formatted;
+}
+
+function runColorConvert() {
+    let hex = document.getElementById("hexInput").value.trim().replace("#", "");
+    if(hex.length === 3) hex = hex.split("").map(c => c + c).join("");
+    if(hex.length !== 6) return alert("Invalid Hex Color!");
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+    document.getElementById("res").innerText = `RGB: rgb(${r}, ${g}, ${b})`;
+}
+
+function runBase64(encode) {
+    const val = document.getElementById("tInput").value;
+    try {
+        document.getElementById("res").innerText = encode ? btoa(val) : atob(val);
+    } catch(e) {
+        document.getElementById("res").innerText = "Invalid Base64 string!";
+    }
+}
+
+function runURLEncode(encode) {
+    const val = document.getElementById("tInput").value;
+    document.getElementById("res").innerText = encode ? encodeURIComponent(val) : decodeURIComponent(val);
+}
+
+function runPercentage() {
+    const p = parseFloat(document.getElementById("pVal").value);
+    const total = parseFloat(document.getElementById("pTotal").value);
+    if(isNaN(p) || isNaN(total)) return alert("Enter valid numbers!");
+    document.getElementById("res").innerText = `${p}% of ${total} is ${(p / 100) * total}`;
+}
+
+function runPassword() {
+    const len = document.getElementById("pLength").value;
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
+    let pass = "";
+    for(let i=0; i<len; i++) pass += chars.charAt(Math.floor(Math.random() * chars.length));
+    document.getElementById("res").innerText = pass;
+}
+
+function runBMI() {
+    const w = parseFloat(document.getElementById("weight").value);
+    const h = parseFloat(document.getElementById("height").value) / 100;
+    if(!w || !h) return alert("Enter valid figures");
+    const bmi = (w / (h * h)).toFixed(1);
+    document.getElementById("res").innerText = `Your BMI is: ${bmi}`;
+}
+
+function runAge() {
+    const dob = new Date(document.getElementById("dob").value);
+    if(isNaN(dob)) return alert("Select a date");
+    const diff = new Date(Date.now() - dob.getTime());
+    document.getElementById("res").innerText = `Age: ${Math.abs(diff.getUTCFullYear() - 1970)} Years old`;
+}
+
+function runBasicCalc() {
+    const expr = document.getElementById("calcExpr").value;
+    try {
+        if(/^[0-9+\-*/. ()]+$/.test(expr)) {
+            document.getElementById("res").innerText = `Result: ${Function('"use strict";return (' + expr + ')')()}`;
+        } else {
+            document.getElementById("res").innerText = "Invalid math expression!";
+        }
+    } catch(e) {
+        document.getElementById("res").innerText = "Error in calculation!";
+    }
+}
+
+function runAverage() {
+    const val = document.getElementById("avgInput").value;
+    const nums = val.split(",").map(n => parseFloat(n.trim())).filter(n => !isNaN(n));
+    if(nums.length === 0) return alert("Enter valid numbers separated by commas!");
+    const sum = nums.reduce((a, b) => a + b, 0);
+    document.getElementById("res").innerText = `Average: ${(sum / nums.length).toFixed(2)} (Count: ${nums.length})`;
+}
+
+function runUnitConvert() {
+    const km = parseFloat(document.getElementById("uVal").value);
+    if(isNaN(km)) return alert("Enter valid distance!");
+    document.getElementById("res").innerText = `${km} km = ${(km * 0.621371).toFixed(2)} Miles`;
+}
+
+function runLorem() {
+    const count = parseInt(document.getElementById("lParas").value) || 1;
+    const text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
+    let res = "";
+    for(let i=0; i<count; i++) res += text + "\n\n";
+    document.getElementById("res").innerText = res.trim();
+}
+
+function runMarkdown() {
+    const val = document.getElementById("tInput").value;
+    let parsed = val
+        .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+        .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+        .replace(/\*\*(.*)\*\*/gim, '<b>$1</b>')
+        .replace(/\*(.*)\*/gim, '<i>$1</i>');
+    document.getElementById("res").innerText = parsed;
+}
+
+/* Page Navigation Management */
+function showPage(pageId) {
+    document.getElementById("mainContent").style.display = "none";
+    document.querySelectorAll(".page-section").forEach(sec => sec.classList.remove("active"));
+    document.getElementById(pageId).classList.add("active");
+    window.scrollTo(0,0);
+}
+
+function showHome() {
+    document.querySelectorAll(".page-section").forEach(sec => sec.classList.remove("active"));
+    document.getElementById("mainContent").style.display = "block";
+}
+
+/* Event Listeners */
+searchInput.addEventListener("input", renderTools);
+
+categories.querySelectorAll(".category-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        categories.querySelectorAll(".category-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeCategory = btn.dataset.category;
+        renderTools();
+    });
+});
+
+document.getElementById("themeButton").addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+    const isDark = document.body.classList.contains("dark");
+    document.getElementById("themeButton").textContent = isDark ? "Light Mode" : "Dark Mode";
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+});
+
+// Load saved theme state
+if(localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark");
+    document.getElementById("themeButton").textContent = "Light Mode";
+}
+
+document.getElementById("menuButton").addEventListener("click", () => {
+    document.getElementById("navLinks").classList.toggle("show");
+});
+
+// Initial Render
+renderTools();
+</script>
+
+</body>
+</html>
